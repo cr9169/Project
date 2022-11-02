@@ -1,4 +1,5 @@
 import * as Joi from "joi";
+import { number } from "joi";
 
 export const validateObject = (input: object) => {
     const schema = Joi.object().keys({
@@ -12,6 +13,8 @@ export const validateObject = (input: object) => {
 // console.log(validateObject({
 //   dsa: "dfs",
 // }));
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 const createPair = <firstElement, secondElement>(var1: firstElement, var2: secondElement): [firstElement, secondElement] => {
   return [var1, var2];
@@ -33,5 +36,34 @@ const createLoggedPair = <S extends string | number, T extends string | number>(
 const pair2 = createLoggedPair("Hi", "Amit");
 console.log(pair2, typeof(pair2));
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+interface Person {
+  age: number;
+  firstName: string;
+  lastName: string;
+}
+
+// Declare an object kindPerson from the Person interface, where all the properties are optional:
+
+const kindPerson1: Partial<Person> = 
+  {
+    age: 10,
+  };
+console.log(`kind person: ${kindPerson1.age}`);
+          
+// Declare an object kindPerson from the Person interface, where all the properties are required.
+
+const kindPerson2: Required<Person> = 
+  {
+    age: 1800,
+    firstName: "Santa",
+    lastName: "Claus",
+  };
+console.log(`kind person: ${kindPerson2.age}`);
+
+// Records: Record<string, number> is equivalent to { [key: string]: number }.
+
+const record: Record<string, number> = { ["1"]: 10, ["2"]: 2 };
+console.log(record["1"], record["2"], typeof(record));

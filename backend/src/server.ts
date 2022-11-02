@@ -67,3 +67,24 @@ console.log(`kind person: ${kindPerson2.age}`);
 
 const record: Record<string, number> = { ["1"]: 10, ["2"]: 2 };
 console.log(record["1"], record["2"], typeof(record));
+
+// Generic constraints 
+
+const merge = <U extends object, V extends object>(obj1: U, obj2: V) => {
+  return {
+      ...obj1,
+      ...obj2
+  };
+}
+
+// let person = merge(
+//   { name: 'John' },
+//   25                    // Argument of type 'number' is not assignable to parameter of type 'object'
+// );
+
+let person = merge(
+  { name: 'John' },
+  { age: 25 }
+);                         // Is fine
+
+

@@ -1,18 +1,18 @@
-version: '3.4'
+version: "3.4"
 
 services:
-  mongo: 
-      image: mongo
-      ports:
-        - 27017:27017
-      restart: always
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    restart: always
   backend:
-      depends_on:
-        - "mongo"
-      image: backend
-      build: ./backend
-      ports: 
-        - 3001:3001
-      environment:
-        - SERVER_PORT=3001
-        - MONGO_URI=mongodb://mongo:27017
+    depends_on:
+      - "mongo"
+    image: backend
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      - SERVER_PORT=3001
+      - MONGO_URI=mongodb://mongo:27017

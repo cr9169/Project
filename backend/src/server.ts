@@ -1,4 +1,7 @@
+import { rejects } from "assert";
 import * as Joi from "joi";
+import { string } from "joi";
+import { resolve } from "path";
 
 export const validateObject = (input: object) => {
   const schema = Joi.object().keys({
@@ -26,8 +29,8 @@ const pair1 = createPair(1, "2");
 //* console.log(`Pair: ${pair1}`);
 //* console.log(`Type of pair: ${typeof(pair1)}`);
 
-type Name<T> = { value: T };
-const name: Name<string> = { value: "Bar" };
+// type Name<T> = { value: T };
+// const name: Name<string> = { value: "Bar" };
 //* console.log(typeof(name), name.value);
 
 const createLoggedPair = <S extends string | number, T extends string | number>(
@@ -43,26 +46,26 @@ const createLoggedPair = <S extends string | number, T extends string | number>(
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-interface Person {
-  age: number;
-  firstName: string;
-  lastName: string;
-}
+// interface Person {
+//   age: number;
+//   firstName: string;
+//   lastName: string;
+// }
 
 // Declare an object kindPerson from the Person interface, where all the properties are optional:
 
-const kindPerson1: Partial<Person> = {
-  age: 10,
-};
+// const kindPerson1: Partial<Person> = {
+//   age: 10,
+// };
 //* console.log(`kind person: ${kindPerson1.age}`);
 
 // Declare an object kindPerson from the Person interface, where all the properties are required.
 
-const kindPerson2: Required<Person> = {
-  age: 1800,
-  firstName: "Santa",
-  lastName: "Claus",
-};
+// const kindPerson2: Required<Person> = {
+//   age: 1800,
+//   firstName: "Santa",
+//   lastName: "Claus",
+// };
 //* console.log(`kind person: ${kindPerson2.age}`);
 
 // Records: Record<string, number> is equivalent to { [key: string]: number }.
@@ -84,4 +87,27 @@ const merge = <U extends object, V extends object>(obj1: U, obj2: V) => {
 //   25                    // Argument of type 'number' is not assignable to parameter of type 'object'
 // );
 
-let person = merge({ name: "John" }, { age: 25 }); // Is fine
+// let person = merge({ name: "John" }, { age: 25 }); // Is fine
+
+const getPropertyValue = <T, K extends keyof T>(obj: T, key: K): T[K] => {
+  return obj[key];
+}
+
+interface Person {
+  age: number,
+  name: string,
+}
+
+const person: Person = {
+  age: 22,
+  name: "Tobias",
+};
+
+// name is a property of person
+// --> no error
+// console.log(getPropertyValue(person, "name"));
+
+
+// gender is not a property of person
+// --> error
+// const gender = getPropertyValue(person, "gender");
